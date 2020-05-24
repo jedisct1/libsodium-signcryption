@@ -196,8 +196,6 @@ int crypto_signcrypt_tbsr_verify_public(
     size_t c_len)
 {
     crypto_signcrypt_tbsbr_sign_state st;
-    unsigned char                     kp[crypto_core_ristretto255_BYTES];
-    unsigned char                     rs[crypto_core_ristretto255_NONREDUCEDSCALARBYTES];
     const unsigned char *             r = sig, *s = sig + crypto_core_ristretto255_BYTES;
 
     if (sender_id_len > 0xff || recipient_id_len > 0xff || info_len > 0xff ||

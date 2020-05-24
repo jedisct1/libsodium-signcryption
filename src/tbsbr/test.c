@@ -4,10 +4,10 @@
 
 int main(void)
 {
-    unsigned char sender_pk[crypto_core_ristretto255_BYTES];
-    unsigned char sender_sk[crypto_core_ristretto255_SCALARBYTES];
-    unsigned char recipient_pk[crypto_core_ristretto255_BYTES];
-    unsigned char recipient_sk[crypto_core_ristretto255_SCALARBYTES];
+    unsigned char sender_pk[crypto_signcrypt_tbsbr_PUBLICKEYBYTES];
+    unsigned char sender_sk[crypto_signcrypt_tbsbr_SECRETKEYBYTES];
+    unsigned char recipient_pk[crypto_signcrypt_tbsbr_PUBLICKEYBYTES];
+    unsigned char recipient_sk[crypto_signcrypt_tbsbr_SECRETKEYBYTES];
     unsigned char crypt_key[crypto_signcrypt_tbsbr_SHAREDBYTES];
     unsigned char sig[crypto_signcrypt_tbsbr_SIGNBYTES];
     unsigned char st[crypto_signcrypt_tbsbr_STATEBYTES];
