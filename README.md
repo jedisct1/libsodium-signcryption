@@ -134,5 +134,5 @@ This function verifies that `sig` is a valid signature for the ciphertext `c` of
 
 ## References
 
-- A Directly Public Verifiable Signcryption Scheme based on Elliptic Curves [[PDF]](https://arxiv.org/ftp/arxiv/papers/1002/1002.3316.pdf) (M. Toorani, A. Beheshti).
+- _A Directly Public Verifiable Signcryption Scheme based on Elliptic Curves_ [[PDF]](https://arxiv.org/ftp/arxiv/papers/1002/1002.3316.pdf) (M. Toorani, A. Beheshti).
 
