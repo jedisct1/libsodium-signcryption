@@ -138,7 +138,15 @@ int crypto_signcrypt_tbsr_verify_public(
 
 This function verifies that `sig` is a valid signature for the ciphertext `c` of length `c_len` bytes, the sender identifier `sender_id`, the recipient `recipient_id`, the context `info`, and the sender's public key `sender_pk`.
 
+# Constants
+
+- `crypto_signcrypt_tbsbr_SECRETKEYBYTES` = 32
+- `crypto_signcrypt_tbsbr_PUBLICKEYBYTES` = 32
+- `crypto_signcrypt_tbsbr_SHAREDBYTES` = 32
+- `crypto_signcrypt_tbsbr_SEEDBYTES` = 64
+- `crypto_signcrypt_tbsbr_SIGNBYTES` = 64
+- `crypto_signcrypt_tbsbr_STATEBYTES` = 512
+
 ## References
 
 - _A Directly Public Verifiable Signcryption Scheme based on Elliptic Curves_ [[PDF]](https://arxiv.org/ftp/arxiv/papers/1002/1002.3316.pdf) (M. Toorani, A. Beheshti).
-
