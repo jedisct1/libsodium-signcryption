@@ -116,6 +116,12 @@ This function verifies that the signature `sig` is valid for the ciphertext `c` 
 
 It returns `-1` is the verification failed, and `0` if it succeeded.
 
+A typical unsigncryption sequence is thus:
+
+- `crypto_signcrypt_tbsbr_verify_before()`
+- decrypt with `shared_key`
+- `crypto_signcrypt_tbsbr_verify_after()` - The return of that function *must* be checked.
+
 ## Public verification
 
 The fact that a message was sent by a specific sender to a specific recipient in a specific context can also be publicly verified, even without giving the ability to decrypt the ciphertext.
