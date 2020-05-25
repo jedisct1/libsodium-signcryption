@@ -21,7 +21,7 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 
 ## Source code
 
-- The `src/tbsbr` directory contains the main source code, with the scheme implemented using the BLAKE2b hash function and the Ristretto255 group.
+- The `src/tbsbr` directory contains the main source code, with the scheme implemented using the BLAKE2b hash function and the Ristretto255 group. This is the recommended version.
 - As an alternative, the `src/tbsbe` directory contains an version using the standard edwards25519 encoding.
 
 The API decription below assumes the `tbsbr` version is being used, but both versions have the exact same API with a different prefix.
