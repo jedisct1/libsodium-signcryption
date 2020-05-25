@@ -37,7 +37,7 @@ static void lp_update(crypto_generichash_state *h, const unsigned char *x, size_
 
 int crypto_signcrypt_tbsbr_sign_before(
     unsigned char st_[crypto_signcrypt_tbsbr_STATEBYTES],
-    unsigned char crypt_key[crypto_signcrypt_tbsbr_SHAREDBYTES], const unsigned char *sender_id,
+    unsigned char shared_key[crypto_signcrypt_tbsbr_SHAREDBYTES], const unsigned char *sender_id,
     size_t sender_id_len, const unsigned char *recipient_id, size_t recipient_id_len,
     const unsigned char *info, size_t info_len,
     const unsigned char sender_sk[crypto_core_ristretto255_SCALARBYTES],
@@ -75,12 +75,13 @@ int crypto_signcrypt_tbsbr_sign_before(
     }
 
     crypto_generichash_init(&st->h, NULL, 0, crypto_signcrypt_tbsbr_SHAREDBYTES);
-    crypto_generichash_update(&st->h, (const unsigned char *) "crypt_key", sizeof "crypt_key" - 1);
+    crypto_generichash_update(&st->h, (const unsigned char *) "shared_key",
+                              sizeof "shared_key" - 1);
     crypto_generichash_update(&st->h, kp, sizeof kp);
     lp_update(&st->h, sender_id, sender_id_len);
     lp_update(&st->h, recipient_id, recipient_id_len);
     lp_update(&st->h, info, info_len);
-    crypto_generichash_final(&st->h, crypt_key, crypto_signcrypt_tbsbr_SHAREDBYTES);
+    crypto_generichash_final(&st->h, shared_key, crypto_signcrypt_tbsbr_SHAREDBYTES);
 
     crypto_generichash_init(&st->h, NULL, 0, crypto_core_ristretto255_NONREDUCEDSCALARBYTES);
     crypto_generichash_update(&st->h, (const unsigned char *) "sign_key", sizeof "sign_key" - 1);
@@ -116,7 +117,7 @@ int crypto_signcrypt_tbsbr_sign_after(
 
 int crypto_signcrypt_tbsbr_verify_before(
     unsigned char       st_[crypto_signcrypt_tbsbr_STATEBYTES],
-    unsigned char       crypt_key[crypto_signcrypt_tbsbr_SHAREDBYTES],
+    unsigned char       shared_key[crypto_signcrypt_tbsbr_SHAREDBYTES],
     const unsigned char sig[crypto_signcrypt_tbsbr_SIGNBYTES], const unsigned char *sender_id,
     size_t sender_id_len, const unsigned char *recipient_id, size_t recipient_id_len,
     const unsigned char *info, size_t info_len,
@@ -143,12 +144,13 @@ int crypto_signcrypt_tbsbr_verify_before(
     }
 
     crypto_generichash_init(&st->h, NULL, 0, crypto_signcrypt_tbsbr_SHAREDBYTES);
-    crypto_generichash_update(&st->h, (const unsigned char *) "crypt_key", sizeof "crypt_key" - 1);
+    crypto_generichash_update(&st->h, (const unsigned char *) "shared_key",
+                              sizeof "shared_key" - 1);
     crypto_generichash_update(&st->h, kp, sizeof kp);
     lp_update(&st->h, sender_id, sender_id_len);
     lp_update(&st->h, recipient_id, recipient_id_len);
     lp_update(&st->h, info, info_len);
-    crypto_generichash_final(&st->h, crypt_key, crypto_signcrypt_tbsbr_SHAREDBYTES);
+    crypto_generichash_final(&st->h, shared_key, crypto_signcrypt_tbsbr_SHAREDBYTES);
 
     crypto_generichash_init(&st->h, NULL, 0, crypto_core_ristretto255_NONREDUCEDSCALARBYTES);
     crypto_generichash_update(&st->h, (const unsigned char *) "sign_key", sizeof "sign_key" - 1);
