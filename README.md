@@ -19,6 +19,13 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 - `info`: this describes the context in which a message was sent. Signature verification will fail if the context expected by the verifier doesn't match the one the signature was origially created for.
 - `shared_key`: a shared secret key, used for encryption.
 
+## Source code
+
+- The `src/tbsbr` directory contains the main source code, with the scheme implemented using the BLAKE2b hash function and the Ristretto255 group.
+- As an alternative, the `src/tbsbe` directory contains an version using the standard edwards25519 encoding.
+
+The API decription below assumes the `tbsbr` version is being used, but both versions have the exact same API with a different prefix.
+
 ## Key pair creation
 
 ```c
