@@ -8,7 +8,7 @@ Traditional authenticated encryption with a shared key allows two or more partie
 
 However, it doesn't allow verification of who in a group originally created a message.
 
-In order to do so, authentication encryption has to be combined with signatures.
+In order to do so, authenticated encryption has to be combined with signatures.
 
 The Toorani-Beheshti signcryption scheme achieves this using a single key pair per device, with forward security and public verifiability.
 
