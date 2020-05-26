@@ -14,17 +14,17 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 
 ## Parameter definitions
 
-- `sender_id`: an identifier for a sender. It may be the sender's public key but it doesn't have to. It can also be an account number, or anything that can uniquely identifier a user. It doesn't need to be secret, nor have high entropy. A user can send messages from multiple devices, each with their own key pair, as long as the `sender_id` remains the same.
+- `sender_id`: an identifier for a sender. It may be the sender's public key but it doesn't have to. It can also be an account number, or anything that can uniquely identify a user. It doesn't need to be secret, nor have high entropy. A user can send messages from multiple devices, each with their own key pair, with `sender_id` remaining the same.
 - `recipient_id`: an identifier for the recipient of a message. It can represent a specific party, or, for a message sent to a group, a group identifier.
 - `info`: this describes the context in which a message was sent. Signature verification will fail if the context expected by the verifier doesn't match the one the signature was origially created for.
-- `shared_key`: a shared secret key, used for encryption.
+- `shared_key`: a shared secret key, used for encryption. The scheme only generates shared secrets; applications are free to use them with the encryption system of their choice.
 
 ## Source code
 
 - The `src/tbsbr` directory contains the main source code, with the scheme implemented using the BLAKE2b hash function and the Ristretto255 group. This is the recommended version.
-- As an alternative, the `src/tbsbe` directory contains an version using the standard edwards25519 encoding.
+- As an alternative, the `src/tbsbe` directory contains a version using the standard edwards25519 encoding.
 
-The API decription below assumes the `tbsbr` version is being used, but both versions have the exact same API with a different prefix.
+The API decription below assumes that the `tbsbr` version is being used, but both versions have the exact same API with a different prefix.
 
 ## Key pair creation
 
@@ -85,9 +85,9 @@ The function returns `-1` or error, `0` on success.
 
 A typical signcryption sequence is thus:
 
-- `crypto_signcrypt_tbsbr_sign_before()`
-- encrypt with `shared_key`
-- `crypto_signcrypt_tbsbr_sign_after()`
+1. `crypto_signcrypt_tbsbr_sign_before()`
+2. encrypt with `shared_key`
+3. `crypto_signcrypt_tbsbr_sign_after()`
 
 ## Unsigncryption
 
@@ -125,13 +125,13 @@ It returns `-1` is the verification failed, and `0` if it succeeded.
 
 A typical unsigncryption sequence is thus:
 
-- `crypto_signcrypt_tbsbr_verify_before()`
-- decrypt with `shared_key`
-- `crypto_signcrypt_tbsbr_verify_after()` - The return of that function *must* be checked.
+1. `crypto_signcrypt_tbsbr_verify_before()`
+2. decrypt with `shared_key`
+3. `crypto_signcrypt_tbsbr_verify_after()` - The return of that function *must* be checked.
 
 ## Public verification
 
-The fact that a message was sent by a specific sender to a specific recipient in a specific context can also be publicly verified, even without giving the ability to decrypt the ciphertext.
+The fact that a message was sent by a specific sender to a specific recipient in a specific context can also be publicly verified, without giving the ability to decrypt the ciphertext.
 
 ```c
 int crypto_signcrypt_tbsr_verify_public(
@@ -145,7 +145,7 @@ int crypto_signcrypt_tbsr_verify_public(
 
 This function verifies that `sig` is a valid signature for the ciphertext `c` of length `c_len` bytes, the sender identifier `sender_id`, the recipient `recipient_id`, the context `info`, and the sender's public key `sender_pk`.
 
-# Constants
+## Constants
 
 - `crypto_signcrypt_tbsbr_SECRETKEYBYTES` = 32
 - `crypto_signcrypt_tbsbr_PUBLICKEYBYTES` = 32
