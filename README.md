@@ -37,6 +37,10 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 
     K = b(RA + R)
     S = (sG + R)A
+
+ alternatively:
+
+    S = A^2 + R
 ```
 
 ## Source code
