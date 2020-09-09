@@ -19,6 +19,30 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 - `info`: this describes the context in which a message was sent. Signature verification will fail if the context expected by the verifier doesn't match the one the signature was origially created for.
 - `shared_key`: a shared secret key, used for encryption. The scheme only generates shared secrets; applications are free to use them with the encryption system of their choice.
 
+## Algorithm summary
+
+```
+(a,A) = sender_sk, sender_pk
+(b,B) = recipent_sk, recipient_pk
+
+    r = H("nonce",sender_sk,recipient_pk,noise,plaintext)
+    R = rG
+    K = (ra + r)B
+    x = H("shared_key",K,sender_id,recipient_id,info)
+    y = H("sign_key",R,sender_id,recipient_id,info,ciphertext)
+    R = rG
+    s = ya - r
+
+ sign = (R,s) = (rG,ya-r)
+
+    K = b(RA + R)
+    S = (sG + R)A
+
+ alternatively:
+
+    S = A^2 + R
+```
+
 ## Source code
 
 - The `src/tbsbr` directory contains the main source code, with the scheme implemented using the BLAKE2b hash function and the Ristretto255 group. This is the recommended version.
