@@ -8,7 +8,7 @@ extern "C" {
 #include <stdlib.h>
 
 #if !defined(__clang__) && !defined(__GNUC__) && !defined(__attribute__)
-#define __atribute__(X)
+#define __attribute__(X)
 #endif
 
 #define crypto_signcrypt_tbsbe_SECRETKEYBYTES 32
