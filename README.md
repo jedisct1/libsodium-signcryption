@@ -22,23 +22,23 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 ## Algorithm summary
 
 ```
-(a,A) = sender_sk, sender_pk
-(b,B) = recipent_sk, recipient_pk
+(a, A) = sender_sk, sender_pk
+(b, B) = recipent_sk, recipient_pk
 
-    r = H("nonce",sender_sk,recipient_pk,noise,plaintext)
+    r = H("nonce", sender_sk, recipient_pk, noise, plaintext)
     R = rG
     K = (ra + r)B
-    x = H("shared_key",K,sender_id,recipient_id,info)
-    y = H("sign_key",R,sender_id,recipient_id,info,ciphertext)
+    x = H("shared_key", K, sender_id, recipient_id, info)
+    y = H("sign_key", R, sender_id, recipient_id, info, ciphertext)
     R = rG
     s = ya - r
 
- sign = (R,s) = (rG,ya-r)
+signature = (R, s) = (rG, ya - r)
 
     K = b(RA + R)
     S = (sG + R)A
 
- alternatively:
+alternatively:
 
     S = A^2 + R
 ```
