@@ -49,7 +49,7 @@ int crypto_signcrypt_tbsbr_verify_after(
     const unsigned char sender_pk[crypto_signcrypt_tbsbr_PUBLICKEYBYTES], const unsigned char *c,
     size_t c_len) __attribute__((warn_unused_result));
 
-int crypto_signcrypt_tbsr_verify_public(
+int crypto_signcrypt_tbsbr_verify_public(
     const unsigned char sig[crypto_signcrypt_tbsbr_SIGNBYTES], const unsigned char *sender_id,
     size_t sender_id_len, const unsigned char *recipient_id, size_t recipient_id_len,
     const unsigned char *info, size_t info_len,

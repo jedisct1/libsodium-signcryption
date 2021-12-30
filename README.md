@@ -158,7 +158,7 @@ A typical unsigncryption sequence is thus:
 The fact that a message was sent by a specific sender to a specific recipient in a specific context can also be publicly verified, without giving the ability to decrypt the ciphertext.
 
 ```c
-int crypto_signcrypt_tbsr_verify_public(
+int crypto_signcrypt_tbsbr_verify_public(
     const unsigned char sig[crypto_signcrypt_tbsbr_SIGNBYTES],
     const unsigned char *sender_id, size_t sender_id_len,
     const unsigned char *recipient_id, size_t recipient_id_len,

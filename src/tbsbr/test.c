@@ -50,7 +50,7 @@ int main(void)
 
     /* the sender can also be publicly verified */
 
-    if (crypto_signcrypt_tbsr_verify_public(
+    if (crypto_signcrypt_tbsbr_verify_public(
             sig, (const unsigned char *) "sender", sizeof "sender" - 1,
             (const unsigned char *) "recipient", sizeof "recipient" - 1, info, info_len, sender_pk,
             c, sizeof c) != 0) {
