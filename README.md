@@ -178,6 +178,10 @@ This function verifies that `sig` is a valid signature for the ciphertext `c` of
 - `crypto_signcrypt_tbsbr_SIGNBYTES` = 64
 - `crypto_signcrypt_tbsbr_STATEBYTES` = 512
 
+## Other implementations
+
+- [signcryption](https://crates.io/crates/signcryption) is a port to the Rust programming language.
+
 ## References
 
 - _A Directly Public Verifiable Signcryption Scheme based on Elliptic Curves_ [[PDF]](https://arxiv.org/ftp/arxiv/papers/1002/1002.3316.pdf) (M. Toorani, A. Beheshti).
