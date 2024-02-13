@@ -27,7 +27,7 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 
     r = H("nonce", sender_sk, recipient_pk, noise, plaintext)
     R = rG
-    K = (ra + r)B
+    K = (Ra + r)B
     x = H("shared_key", K, sender_id, recipient_id, info)
     y = H("sign_key", R, sender_id, recipient_id, info, ciphertext)
     R = rG
