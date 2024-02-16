@@ -16,7 +16,7 @@ The Toorani-Beheshti signcryption scheme achieves this using a single key pair p
 
 - `sender_id`: an identifier for a sender. It may be the sender's public key but it doesn't have to. It can also be an account number, or anything that can uniquely identify a user. It doesn't need to be secret, nor have high entropy. A user can send messages from multiple devices, each with their own key pair, with `sender_id` remaining the same.
 - `recipient_id`: an identifier for the recipient of a message. It can represent a specific party, or, for a message sent to a group, a group identifier.
-- `info`: this describes the context in which a message was sent. Signature verification will fail if the context expected by the verifier doesn't match the one the signature was origially created for.
+- `info`: this describes the context in which a message was sent. Signature verification will fail if the context expected by the verifier doesn't match the one the signature was originally created for.
 - `shared_key`: a shared secret key, used for encryption. The scheme only generates shared secrets; applications are free to use them with the encryption system of their choice.
 
 ## Algorithm summary
