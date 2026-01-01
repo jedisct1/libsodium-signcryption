@@ -184,7 +184,7 @@ int crypto_signcrypt_tbsbr_verify_after(
     if (crypto_scalarmult_ristretto255(check_found, st->challenge, sender_pk) != 0) {
         return -1;
     }
-    if (sodium_memcmp(check_expected, check_found, crypto_core_ristretto255_SCALARBYTES) != 0) {
+    if (sodium_memcmp(check_expected, check_found, crypto_core_ristretto255_BYTES) != 0) {
         return -1;
     }
     return 0;

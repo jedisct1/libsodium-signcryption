@@ -187,13 +187,13 @@ int crypto_signcrypt_tbsbe_verify_after(unsigned char        st_[crypto_signcryp
     if (crypto_scalarmult_ed25519_noclamp(check_found, st->challenge, sender_pk) != 0) {
         return -1;
     }
-    if (sodium_memcmp(check_expected, check_found, crypto_core_ed25519_SCALARBYTES) != 0) {
+    if (sodium_memcmp(check_expected, check_found, crypto_core_ed25519_BYTES) != 0) {
         return -1;
     }
     return 0;
 }
 
-int crypto_signcrypt_tbsr_verify_public(const unsigned char  sig[crypto_signcrypt_tbsbe_SIGNBYTES],
+int crypto_signcrypt_tbsbe_verify_public(const unsigned char  sig[crypto_signcrypt_tbsbe_SIGNBYTES],
                                         const unsigned char *sender_id, size_t sender_id_len,
                                         const unsigned char *recipient_id, size_t recipient_id_len,
                                         const unsigned char *info, size_t info_len,
