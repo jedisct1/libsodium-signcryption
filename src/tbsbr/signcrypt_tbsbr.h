@@ -8,15 +8,15 @@ extern "C" {
 #include <stdlib.h>
 
 #if !defined(__clang__) && !defined(__GNUC__) && !defined(__attribute__)
-#define __attribute__(X)
+#    define __attribute__(X)
 #endif
 
 #define crypto_signcrypt_tbsbr_SECRETKEYBYTES 32
 #define crypto_signcrypt_tbsbr_PUBLICKEYBYTES 32
-#define crypto_signcrypt_tbsbr_SHAREDBYTES 32
-#define crypto_signcrypt_tbsbr_SEEDBYTES 64
-#define crypto_signcrypt_tbsbr_SIGNBYTES (32 + 32)
-#define crypto_signcrypt_tbsbr_STATEBYTES 512
+#define crypto_signcrypt_tbsbr_SHAREDBYTES    32
+#define crypto_signcrypt_tbsbr_SEEDBYTES      64
+#define crypto_signcrypt_tbsbr_SIGNBYTES      (32 + 32)
+#define crypto_signcrypt_tbsbr_STATEBYTES     512
 
 int crypto_signcrypt_tbsbr_sign_before(
     unsigned char st[crypto_signcrypt_tbsbr_STATEBYTES],

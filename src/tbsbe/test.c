@@ -2,7 +2,8 @@
 #include <sodium.h>
 #include <stdio.h>
 
-int main(void)
+int
+main(void)
 {
     unsigned char sender_pk[crypto_signcrypt_tbsbe_PUBLICKEYBYTES];
     unsigned char sender_sk[crypto_signcrypt_tbsbe_SECRETKEYBYTES];

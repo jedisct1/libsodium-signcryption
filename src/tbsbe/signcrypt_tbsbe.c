@@ -9,7 +9,8 @@ typedef struct crypto_signcrypt_tbsbe_sign_state {
     unsigned char            challenge[crypto_core_ed25519_SCALARBYTES];
 } crypto_signcrypt_tbsbe_sign_state;
 
-static int sc25519_is_canonical(const unsigned char s[crypto_core_ed25519_SCALARBYTES])
+static int
+sc25519_is_canonical(const unsigned char s[crypto_core_ed25519_SCALARBYTES])
 {
     static const unsigned char L[32] = { 0xed, 0xd3, 0xf5, 0x5c, 0x1a, 0x63, 0x12, 0x58,
                                          0xd6, 0x9c, 0xf7, 0xa2, 0xde, 0xf9, 0xde, 0x14,
@@ -27,7 +28,8 @@ static int sc25519_is_canonical(const unsigned char s[crypto_core_ed25519_SCALAR
     return (c != 0);
 }
 
-static void lp_update(crypto_generichash_state *h, const unsigned char *x, size_t x_len)
+static void
+lp_update(crypto_generichash_state *h, const unsigned char *x, size_t x_len)
 {
     unsigned char x_len_u8 = (unsigned char) x_len;
 
@@ -35,14 +37,15 @@ static void lp_update(crypto_generichash_state *h, const unsigned char *x, size_
     crypto_generichash_update(h, x, x_len);
 }
 
-int crypto_signcrypt_tbsbe_sign_before(
-    unsigned char st_[crypto_signcrypt_tbsbe_STATEBYTES],
-    unsigned char shared_key[crypto_signcrypt_tbsbe_SHAREDBYTES], const unsigned char *sender_id,
-    size_t sender_id_len, const unsigned char *recipient_id, size_t recipient_id_len,
-    const unsigned char *info, size_t info_len,
-    const unsigned char sender_sk[crypto_core_ed25519_SCALARBYTES],
-    const unsigned char recipient_pk[crypto_core_ed25519_BYTES], const unsigned char *m,
-    size_t m_len)
+int
+crypto_signcrypt_tbsbe_sign_before(unsigned char st_[crypto_signcrypt_tbsbe_STATEBYTES],
+                                   unsigned char shared_key[crypto_signcrypt_tbsbe_SHAREDBYTES],
+                                   const unsigned char *sender_id, size_t sender_id_len,
+                                   const unsigned char *recipient_id, size_t recipient_id_len,
+                                   const unsigned char *info, size_t info_len,
+                                   const unsigned char  sender_sk[crypto_core_ed25519_SCALARBYTES],
+                                   const unsigned char  recipient_pk[crypto_core_ed25519_BYTES],
+                                   const unsigned char *m, size_t m_len)
 {
     unsigned char                      rs[crypto_core_ed25519_NONREDUCEDSCALARBYTES];
     unsigned char                      ks[crypto_core_ed25519_SCALARBYTES];
@@ -95,15 +98,15 @@ int crypto_signcrypt_tbsbe_sign_before(
     return 0;
 }
 
-int crypto_signcrypt_tbsbe_sign_after(
-    unsigned char       st_[crypto_signcrypt_tbsbe_STATEBYTES],
-    unsigned char       sig[crypto_signcrypt_tbsbe_SIGNBYTES],
-    const unsigned char sender_sk[crypto_core_ed25519_SCALARBYTES], const unsigned char *c,
-    size_t c_len)
+int
+crypto_signcrypt_tbsbe_sign_after(unsigned char        st_[crypto_signcrypt_tbsbe_STATEBYTES],
+                                  unsigned char        sig[crypto_signcrypt_tbsbe_SIGNBYTES],
+                                  const unsigned char  sender_sk[crypto_core_ed25519_SCALARBYTES],
+                                  const unsigned char *c, size_t c_len)
 {
     unsigned char                      nonreduced[crypto_core_ed25519_NONREDUCEDSCALARBYTES];
     crypto_signcrypt_tbsbe_sign_state *st = (crypto_signcrypt_tbsbe_sign_state *) (void *) st_;
-    unsigned char *                    r = sig, *s = sig + crypto_core_ed25519_BYTES;
+    unsigned char                     *r = sig, *s = sig + crypto_core_ed25519_BYTES;
 
     crypto_generichash_update(&st->h, c, c_len);
     crypto_generichash_final(&st->h, nonreduced, sizeof nonreduced);
@@ -117,19 +120,20 @@ int crypto_signcrypt_tbsbe_sign_after(
     return 0;
 }
 
-int crypto_signcrypt_tbsbe_verify_before(
-    unsigned char       st_[crypto_signcrypt_tbsbe_STATEBYTES],
-    unsigned char       shared_key[crypto_signcrypt_tbsbe_SHAREDBYTES],
-    const unsigned char sig[crypto_signcrypt_tbsbe_SIGNBYTES], const unsigned char *sender_id,
-    size_t sender_id_len, const unsigned char *recipient_id, size_t recipient_id_len,
-    const unsigned char *info, size_t info_len,
-    const unsigned char sender_pk[crypto_core_ed25519_BYTES],
-    const unsigned char recipient_sk[crypto_core_ed25519_BYTES])
+int
+crypto_signcrypt_tbsbe_verify_before(unsigned char st_[crypto_signcrypt_tbsbe_STATEBYTES],
+                                     unsigned char shared_key[crypto_signcrypt_tbsbe_SHAREDBYTES],
+                                     const unsigned char  sig[crypto_signcrypt_tbsbe_SIGNBYTES],
+                                     const unsigned char *sender_id, size_t sender_id_len,
+                                     const unsigned char *recipient_id, size_t recipient_id_len,
+                                     const unsigned char *info, size_t info_len,
+                                     const unsigned char sender_pk[crypto_core_ed25519_BYTES],
+                                     const unsigned char recipient_sk[crypto_core_ed25519_BYTES])
 {
     unsigned char                      kp[crypto_core_ed25519_BYTES];
     unsigned char                      rs[crypto_core_ed25519_NONREDUCEDSCALARBYTES];
     crypto_signcrypt_tbsbe_sign_state *st = (crypto_signcrypt_tbsbe_sign_state *) (void *) st_;
-    const unsigned char *              r = sig, *s = sig + crypto_core_ed25519_BYTES;
+    const unsigned char               *r = sig, *s = sig + crypto_core_ed25519_BYTES;
 
     if (sender_id_len > 0xff || recipient_id_len > 0xff || info_len > 0xff ||
         !sc25519_is_canonical(s)) {
@@ -166,16 +170,17 @@ int crypto_signcrypt_tbsbe_verify_before(
     return 0;
 }
 
-int crypto_signcrypt_tbsbe_verify_after(unsigned char        st_[crypto_signcrypt_tbsbe_STATEBYTES],
-                                        const unsigned char  sig[crypto_signcrypt_tbsbe_SIGNBYTES],
-                                        const unsigned char  sender_pk[crypto_core_ed25519_BYTES],
-                                        const unsigned char *c, size_t c_len)
+int
+crypto_signcrypt_tbsbe_verify_after(unsigned char        st_[crypto_signcrypt_tbsbe_STATEBYTES],
+                                    const unsigned char  sig[crypto_signcrypt_tbsbe_SIGNBYTES],
+                                    const unsigned char  sender_pk[crypto_core_ed25519_BYTES],
+                                    const unsigned char *c, size_t c_len)
 {
     unsigned char                      check_expected[crypto_core_ed25519_BYTES];
     unsigned char                      check_found[crypto_core_ed25519_BYTES];
     unsigned char                      nonreduced[crypto_core_ed25519_NONREDUCEDSCALARBYTES];
     crypto_signcrypt_tbsbe_sign_state *st = (crypto_signcrypt_tbsbe_sign_state *) (void *) st_;
-    const unsigned char *              r = sig, *s = sig + crypto_core_ed25519_BYTES;
+    const unsigned char               *r = sig, *s = sig + crypto_core_ed25519_BYTES;
 
     crypto_generichash_update(&st->h, c, c_len);
     crypto_generichash_final(&st->h, nonreduced, sizeof nonreduced);
@@ -193,15 +198,16 @@ int crypto_signcrypt_tbsbe_verify_after(unsigned char        st_[crypto_signcryp
     return 0;
 }
 
-int crypto_signcrypt_tbsbe_verify_public(const unsigned char  sig[crypto_signcrypt_tbsbe_SIGNBYTES],
-                                        const unsigned char *sender_id, size_t sender_id_len,
-                                        const unsigned char *recipient_id, size_t recipient_id_len,
-                                        const unsigned char *info, size_t info_len,
-                                        const unsigned char  sender_pk[crypto_core_ed25519_BYTES],
-                                        const unsigned char *c, size_t c_len)
+int
+crypto_signcrypt_tbsbe_verify_public(const unsigned char  sig[crypto_signcrypt_tbsbe_SIGNBYTES],
+                                     const unsigned char *sender_id, size_t sender_id_len,
+                                     const unsigned char *recipient_id, size_t recipient_id_len,
+                                     const unsigned char *info, size_t info_len,
+                                     const unsigned char  sender_pk[crypto_core_ed25519_BYTES],
+                                     const unsigned char *c, size_t c_len)
 {
     crypto_signcrypt_tbsbe_sign_state st;
-    const unsigned char *             r = sig, *s = sig + crypto_core_ed25519_BYTES;
+    const unsigned char              *r = sig, *s = sig + crypto_core_ed25519_BYTES;
 
     if (sender_id_len > 0xff || recipient_id_len > 0xff || info_len > 0xff ||
         !sc25519_is_canonical(s)) {
@@ -218,16 +224,18 @@ int crypto_signcrypt_tbsbe_verify_public(const unsigned char  sig[crypto_signcry
                                                c_len);
 }
 
-void crypto_signcrypt_tbsbe_keygen(unsigned char pk[crypto_core_ed25519_BYTES],
-                                   unsigned char sk[crypto_core_ed25519_SCALARBYTES])
+void
+crypto_signcrypt_tbsbe_keygen(unsigned char pk[crypto_core_ed25519_BYTES],
+                              unsigned char sk[crypto_core_ed25519_SCALARBYTES])
 {
     crypto_core_ed25519_scalar_random(sk);
     crypto_scalarmult_ed25519_base_noclamp(pk, sk);
 }
 
-void crypto_signcrypt_tbsbe_seed_keygen(unsigned char       pk[crypto_core_ed25519_BYTES],
-                                        unsigned char       sk[crypto_core_ed25519_SCALARBYTES],
-                                        const unsigned char seed[crypto_signcrypt_tbsbe_SEEDBYTES])
+void
+crypto_signcrypt_tbsbe_seed_keygen(unsigned char       pk[crypto_core_ed25519_BYTES],
+                                   unsigned char       sk[crypto_core_ed25519_SCALARBYTES],
+                                   const unsigned char seed[crypto_signcrypt_tbsbe_SEEDBYTES])
 {
     crypto_core_ed25519_scalar_reduce(sk, seed);
     crypto_scalarmult_ed25519_base_noclamp(pk, sk);
